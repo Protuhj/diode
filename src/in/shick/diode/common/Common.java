@@ -85,6 +85,8 @@ public class Common {
     private static final ObjectMapper mObjectMapper =
         new ObjectMapper().configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+    private static final Pattern m_imgurRegex = Pattern.compile("^https?:\\/\\/(\\w+\\.)?imgur\\.com\\/([a-zA-Z0-9]+)(\\.[a-zA-Z]{3})?$");
+
     public static void showErrorToast(String error, int duration, Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Toast t = new Toast(context);
@@ -518,7 +520,16 @@ public class Common {
         } catch (Exception ex) {
             if (Constants.LOGGING) Log.i(TAG, "Browser.updateVisitedHistory error", ex);
         }
-
+        Matcher m = m_imgurRegex.matcher(url);
+        if (m.matches() && m.group(2) != null) {
+            url = "http://i.imgur.com/" + m.group(2);
+            if (!StringUtils.isEmpty(m.group(3))) {
+                url += m.group(3);
+            } else {
+                // Need to give images an extension, or imgur will redirect to the mobile site.
+                url += ".png";
+            }
+        }
         Uri uri = Uri.parse(url);
 
         if (!bypassParser) {

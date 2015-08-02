@@ -163,9 +163,8 @@
                 android:singleLine="true"
                 android:ellipsize="marquee"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/gray_50"
-                android:visibility="gone"
-                />
+					  android:visibility="gone"
+					  android:background="@drawable/rounded_corner" android:textColor="@color/black"/>
 
 		</LinearLayout>
     
