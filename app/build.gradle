@@ -19,6 +19,12 @@ android {
     packagingOptions{
         exclude 'META-INF/ASL2.0'
     }
+    android {
+        lintOptions {
+            // This project is ancient and on life support.
+            abortOnError false
+        }
+    }
 }
 
 dependencies {
